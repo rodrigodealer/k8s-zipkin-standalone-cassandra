@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: dependencies
+  name: dependencies
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: dependencies
+    spec:
+      containers:
+      - command:
+        - crond
+        - -f
+        env:
+        - name: STORAGE_TYPE
+          value: cassandra
+        - name: CASSANDRA_HOST
+          value: [CASSANDRA_HOST]
+        image: openzipkin/zipkin-dependencies
+        name: dependencies
+        resources: {}
+      restartPolicy: Always
+status: {}

@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: zipkin-ui
+  name: zipkin-ui
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "[AWS_ARN_CERT]"
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: https
+    external-dns.alpha.kubernetes.io/hostname: [ZIPKIN_UI_HOSTNAME].
+    service.beta.kubernetes.io/aws-load-balancer-extra-security-groups: default_protection
+spec:
+  selector:
+    app: zipkin-ui
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+  - name: https
+    port: 443
+    targetPort: 80
+  type: LoadBalancer

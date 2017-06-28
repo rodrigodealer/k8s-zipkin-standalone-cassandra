@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: zipkin-ui
+  name: zipkin-ui
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: zipkin-ui
+    spec:
+      containers:
+      - env:
+        - name: ZIPKIN_BASE_URL
+          value: http://zipkin:9411
+        image: openzipkin/zipkin-ui
+        name: zipkin-ui
+        ports:
+        - containerPort: 80
+        resources: {}
+      restartPolicy: Always
+status: {}
